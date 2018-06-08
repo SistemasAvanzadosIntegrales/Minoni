@@ -1,0 +1,109 @@
+.nav-inf {
+    height: 60px;
+    padding: 15px 16px;
+    top: 65px;
+    border-radius: 50px;
+    right: -35px;
+    position: fixed;
+    width: 85px;
+    z-index: 1000;
+    background: #4AB551;
+    cursor: pointer;
+    transform: translate3d(0px, 0, 0);
+    transition: 0.15s all ease;
+}
+
+.nav-inf:hover {
+    transform: translate3d(-5px, 0, 0);
+    transition: 0.15s all ease;
+}
+
+.nav-inf i {
+    color: #fff;
+    font-size: 2rem;
+}
+
+#usr {
+    max-width: 100%;
+    border-radius: 200px;
+}
+
+.img-circle {
+    max-width: 160px;
+    max-height: 160px;
+    border-radius: 200px;
+}
+
+nav {
+    width: 80%;
+    height: 100vh;
+    position: fixed;
+    margin: 0;
+    overflow: auto;
+    background: #fff;
+    z-index: 999;
+}
+
+.menu-items {
+    padding: 0 0.5rem;
+}
+
+.menu-items .link {
+    padding: 5px;
+}
+
+.menu-items .link a {
+    font-size: 16px;
+}
+
+.menu-items img {
+    width: 35px;
+}
+
+#menu h2 {
+    font-weight: bold;
+    color: #4AB551;
+    font-size: 16px !important;
+}
+
+#menu hr {
+    border: 3px solid #760C31 !important;
+}
+
+#menu .acerca {
+    bottom: 0;
+    position: absolute;
+}
+
+#menu .salir {
+    bottom: 0;
+    position: initial;
+    color: #fff;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+#menu .acerca i {
+    color: #760C31;
+    font-size: 12px
+}
+
+#menu .acerca a {
+    font-weight: bold;
+    font-size: 13px;
+}
+
+#menu .facebook img {
+    width: 35px;
+}
+
+.modal-background {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    margin: 0;
+    overflow: hidden;
+    z-index: 999;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+

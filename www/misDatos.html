@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            /* following two viewport lines are equivalent to the meta viewport statement above, needed for Windows */
+            /* see http://www.quirksmode.org/blog/archives/2014/05/html5_dev_conf.html and http://dev.w3.org/csswg/css-device-adapt/ */
+            @-ms-viewport { width: 100vw ; zoom: 100% ; }  @viewport { width: 100vw ; zoom: 100% ; }
+            @-ms-viewport { user-zoom: fixed ; }           @viewport { user-zoom: fixed ; }
+        </style>
+        
+        <!--CSS-->
+        <link rel="stylesheet" href="css/bootstrap.css" />
+        <link rel="stylesheet" href="css/main.css" />
+        <link rel="stylesheet" href="css/font-awesome.css" />
+        <link rel="stylesheet" href="css/menu.css" />
+        <link rel="stylesheet" href="css/modal.css" />
+        
+        <!-- JS -->
+        <script type="text/javascript" src="js/app.js"></script>
+        <script type="text/javascript" src="xdk/init-dev.js"></script>        
+        <script type="text/javascript" src="cordova.js"></script>  
+    </head>
+    
+    <body onclick="afuera();">
+        
+        <!-- opacity -->
+        <div class="col-12 float-left modal-background hidden"></div>
+        
+        <!-- Menú -->
+        <header id="menu"></header>
+        
+        <!-- Header -->
+        <div id="header">
+            <div class="col-4 logo float-left no-padding">
+                <img src="img/logo.png" onclick="index();"/>
+            </div>
+            <div class="col-8 text-right float-left" id="header-title">
+                <img src="img/splash.png" />
+                <h1>MIS DATOS</h1>
+            </div>
+        </div>
+        
+        <div class="main-wrapper" style="display: none;">
+            <!-- Imagenes promociones -->
+            <div class="col-12 col-md-8 offset-md-2">
+                <form>
+                    <div class="form-group frmMisDatos" > 
+
+                        <!-- Mi tarjeta -->
+                        <div class="col-12 float-left no-padding">
+                            <label class="col-3 float-left control-label no-padding text-right">
+                                Registro: &nbsp;
+                            </label>
+
+                            <div class="col-9 float-left mt-2 text-left">
+                                <div id="txtTarjeta"></div>
+                            </div> 
+                        </div>
+
+                        <!-- Nombre -->
+                        <div class="col-12 float-left no-padding">
+                            <label  class="col-3 float-left control-label no-padding text-right">
+                                Nombre: &nbsp;
+                            </label>
+
+                            <div class="col-9 float-left mt-2 text-left">
+                                <div id="txtNombre"></div>
+                            </div> 
+                        </div>
+
+                        <!-- Sexo -->
+                        <div class="col-12 float-left no-padding">
+                            <label  class="col-3 float-left control-label no-padding text-right">
+                                Sexo: &nbsp;
+                            </label>
+
+                            <div class="col-9 float-left no-padding mb-3">
+                                <select id="txtSexo" class="form-control input-sm">
+                                    <option value="">Selecciona</option>
+                                    <option value="F">Femenino</option>
+                                    <option value="M">Masculino</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Fecha de nacimiento -->
+                        <div class="col-12 float-left no-padding">
+                            <label class="col-3 float-left control-label no-padding text-right" style="margin-top: -4px; height: 37px;">
+                                Fecha de nacimiento: &nbsp;
+                            </label>
+
+                            <div class="col-9 float-left no-padding mb-3">
+                                <input type="date" id="txtCumple" class="form-control input-sm required" maxlength="50" />
+                            </div>
+                        </div> 
+
+                        <!-- Contraseña -->
+                        <div class="col-12 float-left no-padding mt-2">
+                            <label class="col-3 float-left control-label no-padding text-right" style="height: 35px;">
+                                <span class="naranja"></span>
+                                Contraseña: &nbsp;
+                            </label>
+
+                            <div class="col-9 float-left no-padding mb-3">
+                                <input type="password" id="txtpass" class="form-control input-sm required"  maxlength="50" />
+                            </div>
+                        </div>
+
+                        <!-- Confirmar contraseña -->
+                        <div class="col-12 float-left no-padding">
+                            <label  class="col-3 float-left control-label no-padding text-right" style="margin-top: -2px; height: 35px;">
+                                <span class="naranja"></span>
+                                Confirmar contraseña: &nbsp;
+                            </label>
+
+                            <div class="col-9 float-left no-padding mb-3">
+                                <input type="password" id="txtpass2" class="form-control input-sm required"  maxlength="50" />
+                            </div>
+                        </div>
+
+                        <!-- E-mail -->
+                        <div class="col-12 float-left no-padding">
+                            <label  class="col-3 float-left control-label no-padding text-right">
+                                <span class="naranja">*</span>
+                                E-Mail: &nbsp;
+                            </label>
+
+                            <div class="col-9 float-left no-padding mb-3">
+                                <input type="email" id="txtCorreo" name="txtCorreo" class="form-control input-sm required" maxlength="50" />
+                            </div>
+                        </div>
+
+                        <!-- Telefono -->
+                        <div class="col-12 float-left no-padding">
+                            <label  class="col-3 float-left control-label no-padding text-right" style="height: 35px;">
+                                <span class="naranja"></span>
+                                Teléfono: &nbsp;
+                            </label>
+
+                            <div class="col-9 float-left no-padding mb-3">
+                                <input type="text" id="txtTelefono2" name="txtTelefono2" class="form-control input-sm required"  maxlength="50" />
+                            </div> 
+                        </div>
+
+                        <!-- Celular -->
+                        <div class="col-12 float-left no-padding">
+                            <label  class="col-3 float-left control-label no-padding text-right">
+                                <span class="naranja">*</span>
+                                Celular: &nbsp;
+                            </label>
+
+                            <div class="col-9 float-left no-padding mb-3">
+                                <input type="text" id="txtTelefono" name="txtTelefono" class="form-control input-sm required" maxlength="50" />
+                            </div> 
+                        </div>
+
+                        <!-- Colonia -->
+                        <div class="col-12 float-left no-padding">
+                             <label  class="col-3 float-left control-label no-padding text-right">
+                                 <span class="naranja"></span>
+                                 Colonia: &nbsp;
+                            </label>
+
+                            <div class="col-9 float-left no-padding mb-3">
+                                <input type="text" id="txtColonia" name="txtColonia" class="form-control input-sm" maxlength="50" />
+                            </div> 
+                        </div>
+
+                        <!-- C.P -->
+                        <div class="col-12 float-left no-padding">
+                            <label  class="col-3 float-left control-label no-padding text-right">
+                                <span class="naranja"></span>
+                                C.P: &nbsp;
+                            </label>
+
+                            <div class="col-9 float-left no-padding mb-3">
+                                <input type="text" id="txtCp" name="txtCp" class="form-control input-sm" maxlength="50" />
+                            </div> 
+                        </div>
+
+                        <!-- Estado -->
+                        <div class="col-12 float-left no-padding">
+                            <label  class="col-3 float-left control-label no-padding text-right">
+                                <span class="naranja"></span>
+                                Estado: &nbsp;
+                            </label>
+
+                            <div class="col-9 float-left no-padding mb-3">
+                                <select id="txtEstado" class="form-control input-sm">
+                                    <option value="">Selecciona</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Municipio -->
+                        <div class="col-12 float-left no-padding">
+                            <label  class="col-3 float-left control-label no-padding text-center">
+                                <span class="naranja"></span>
+                                Municipio: &nbsp;
+                            </label>
+
+                            <div class="col-9 float-left no-padding mb-3">
+                                <select id="txtMunicipio" class="form-control input-sm"></select>
+                            </div>
+                        </div>
+                    </div> 
+                </form>
+                
+                <!-- Alerta -->
+                <div class="col-12 float-left no-padding ">
+                    <p class="alert alert-danger mt-4" id="alertaRegistro" style="display:none !important;"></p>
+                </div>
+                
+                <!-- Terminos y condiciones -->
+                <div class="col-12 mt-4 float-left">
+                    <div class="col-1 no-padding text-center float-left">
+                        <input class="" name="politicas" id="politicas" type="checkbox" value="" style="zoom:2;">
+                    </div>
+                    <div class="col-11 text-center no-padding float-left">
+                        <h3 for="nombre" class="control-label" onclick="terminosYCondiciones();">
+                            Acepto términos y condiciones.
+                        </h3>
+                    </div>
+                </div>
+                
+                <!-- Politicas de privacidad -->
+                <div class="col-12 float-left mt-4 text-center">
+                    <h3 onclick="politicas();">
+                        Políticas de privacidad
+                    </h3>
+                </div>
+                
+                <!-- Submit -->
+                <div class="col-8 offset-2 col-sm-6 offset-sm-3 float-left">
+                    <button type="button" onclick="saveData();" class="btn btn-block">
+                        Actualizar
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="col-12 no-padding front-footer">
+            <img src="img/footer.png" width="100%">
+        </div>
+        
+        <!-- Menu -->
+        <div class="nav-inf" id="menus">
+            <i class="fa fa-bars"></i>
+        </div>
+        
+        <!--JS-->
+        <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.js"></script>
+        <script type="text/javascript" src="js/sweetalert2.all.js"></script>
+        <script type="text/javascript" src="js/push.js"></script>
+        <script type="text/javascript" src="js/polyfill.min.js"></script>
+        <script type="text/javascript" src="js/comun.min.js"></script>
+        <script type="text/javascript" src="js/menu.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                
+                obtenerDatosPersonales()
+                estados()
+                municipios()
+                
+                swal({
+                    title: 'Cargando datos...',
+                    timer: 1500,
+                    allowOutsideClick: false,
+                    onOpen: () => {
+                        swal.showLoading()
+                    }
+                }).then(() => {
+                    $('#txtEstado').change(function(){
+                        municipios()
+                    })
+                    
+                    $('.main-wrapper').show()
+                })
+            })
+        </script>    
+    </body>
+</html>

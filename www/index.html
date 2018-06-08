@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            /* following two viewport lines are equivalent to the meta viewport statement above, needed for Windows */
+            /* see http://www.quirksmode.org/blog/archives/2014/05/html5_dev_conf.html and http://dev.w3.org/csswg/css-device-adapt/ */
+            @-ms-viewport { width: 100vw ; zoom: 100% ; }  @viewport { width: 100vw ; zoom: 100% ; }
+            @-ms-viewport { user-zoom: fixed ; }           @viewport { user-zoom: fixed ; }
+        </style>
+        
+        <!--CSS-->
+        <link rel="stylesheet" href="css/bootstrap.css" />
+        <link rel="stylesheet" href="css/main.css" />
+        <!-- <link rel="stylesheet" href="css/font-awesome.css" /> -->
+        
+        <!-- JS -->
+        <script type="text/javascript" src="js/app.js"></script>
+        <script type="text/javascript" src="xdk/init-dev.js"></script>        
+        <script type="text/javascript" src="cordova.js"></script>  
+    </head>
+    
+    <body>
+        <!-- Header -->
+        <div id="header">
+            <div class="col-4 logo float-left no-padding">
+                <img src="img/logo.png" onclick="index();"/>
+            </div>
+            <div class="col-8 text-right float-left" id="header-title">
+                <img src="img/splash.png" />
+                <h1 >BIENVENID@</h1>
+            </div>
+        </div>
+        
+        <div class="main-wrapper" style="display: none;">
+            <div class="col-12 col-md-8 offset-md-2">
+                <form class="form-group text-right" id="login-frm">
+                    
+                    <!-- 21 -->
+                    <input type="text" class="form-control" id="numeroTarjeta" name="numeroTarjeta" placeholder="Número de tarjeta o E-mail"> 
+                    
+                    <!-- 123456 -->
+                    <input type="password" class="form-control mt-4" id="contrasena" name="contrasena" placeholder="Contraseña">
+                    
+                    <div class="col-12 text-left mt-2" style="font-style:italic;">
+                        <a href="recuperarContrasena.html">Olvidé mi contraseña</a>
+                    </div>
+                    
+                    <p class="alert alert-danger mt-4 text-center" id="alertaLogin" style="display:none !important;"></p>
+                    
+                    <div class="col-8 offset-2 col-sm-6 offset-sm-3">
+                        <button type="button" onclick="authentication()" class="btn btn-block">
+                            INICIAR SESIÓN
+                        </button>
+                    </div>
+                </form>
+                
+                <hr class="mt-4" />
+                
+                <h3 class="mt-3 text-center">¿No tienes una cuenta?</h3>
+                
+                <div class="col-8 offset-2 col-sm-6 offset-sm-3">
+                    <a href="registro.html" class="btn btn-block">
+                        REGISTRATE
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="col-12 no-padding front-footer">
+            <img src="img/footer.png" width="100%">
+        </div>
+        
+        <!--JS-->
+        <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.js"></script>
+        <script type="text/javascript" src="js/sweetalert2.all.js"></script>
+<!--        <script type="text/javascript" src="js/push.js"></script>-->
+        <script type="text/javascript" src="js/polyfill.min.js"></script>
+        <script type="text/javascript" src="js/comun.min.js"></script>
+        <script type="application/javascript">
+            $(document).ready(function() {
+                swal({
+                    title: 'Cargando...',
+                    timer: 500,
+                    allowOutsideClick: false,
+                    onOpen: () => {
+                        swal.showLoading()
+                    }
+                }).then(() => {
+                    if(auth.isLogged()) {
+                        location.href='home.html';
+                    }
+                    else {
+                        $('.main-wrapper').show()
+                    }
+                })
+             })
+        </script>
+    </body>
+</html>

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            /* following two viewport lines are equivalent to the meta viewport statement above, needed for Windows */
+            /* see http://www.quirksmode.org/blog/archives/2014/05/html5_dev_conf.html and http://dev.w3.org/csswg/css-device-adapt/ */
+            @-ms-viewport { width: 100vw ; zoom: 100% ; }  @viewport { width: 100vw ; zoom: 100% ; }
+            @-ms-viewport { user-zoom: fixed ; }           @viewport { user-zoom: fixed ; }
+        </style>
+        
+        <!--CSS-->
+        <link rel="stylesheet" href="css/bootstrap.css" />
+        <link rel="stylesheet" href="css/main.css" />
+        <link rel="stylesheet" href="css/font-awesome.css" />
+        <link rel="stylesheet" href="css/menu.css" />
+        <link rel="stylesheet" href="css/main-ordena.css" />
+        
+        <!-- JS -->
+        <script type="text/javascript" src="js/app.js"></script>
+        <script type="text/javascript" src="xdk/init-dev.js"></script>        
+        <script type="text/javascript" src="cordova.js"></script>
+    </head>
+    
+    <body onclick="afuera();">
+        
+        <!-- opacity -->
+        <div class="col-12 float-left modal-background hidden"></div>
+        
+        <!-- Menú -->
+        <header id="menu"></header>
+        
+        <!-- Header -->
+        <div id="header">
+            <div class="col-4 logo float-left no-padding">
+                <img src="img/logo.png" onclick="index();"/>
+            </div>
+            <div class="col-8 text-right float-left" id="header-title">
+                <img src="img/splash.png" />
+                <h1>DOMICILIO</h1>
+            </div>
+        </div>
+        
+        <div class="main-wrapper">
+            <div class="col-12 col-md-8 offset-md-2 no-padding">
+                
+                <!-- Navegación -->
+                <div id="nav-indicador">
+                    <div class="col-4 float-left no-pr text-left">
+                        <a href="#" class="hide"><i class="fa fa-arrow-circle-left"></i></a>
+                        <a href="ordena.html"><i class="fa fa-home"></i></a>
+                    </div>
+                    <div class="col-6 float-left no-pr text-left">
+                        <span></span>
+                    </div>
+                    <div class="col-2 float-left no-pl text-right">
+                        <a href="ordenaConfirma.html" id="shopping-cart" class="text-right mr-2">
+                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                            <span id="number-cart"></span>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="col-12 float-left mt-2">
+                    <form>
+                        <!---------------------- Ubicación ---------------------->
+                        <h3 class="title-ordena">Mi ubicación</h3>
+                        
+                        <div class="mt-3">
+                            <label class="no-margin">País:</label>
+                            <input class="form-control required" type="text" placeholder="Pais" id="collect_country" name="collect_country" readonly/>
+                        </div>
+                        
+                        <div class="mt-3">
+                            <label class="no-margin">Estado:</label>
+                            <input class="form-control required" type="text" placeholder="Estado" id="collect_state" name="collect_state" readonly/>
+                        </div>
+                        
+                        <div class="mt-3">
+                            <label class="no-margin">Municipio:</label>
+                            <input class="form-control required" type="text" placeholder="Municipio" id="collect_province" name="collect_province" readonly/>
+                        </div>
+                        
+                        <!---------------------- Where ---------------------->
+                        <h3 class="title-ordena mt-3">
+                            ¿Pedido a domicilio o sucursal?
+                            <button type="button" class="help-button" onclick="info('Al elegir servicio a domicilio tendras que proporcionar datos precisos para que la entrega sea efectiva, caso contrario si es recoger en sucursal solo completa la información solicitada.');">
+                                <i class="fa fa-question-circle"></i>
+                            </button>
+                        </h3>
+                        <select id="where" name="where" class="form-control required mt-3">
+                            <option value="">Seleccionar opción</option>
+                            <option value="1">Domicilio</option>
+                            <option value="2">Sucursal</option>
+                        </select>
+                        
+                        <div id="how" class="hidden">
+                            <div class="mt-3">
+                                <label class="no-margin">
+                                    Código Postal:
+                                    <button type="button" class="help-button label" onclick="info('Inserta el código postal para validar si cuentas con cobertura para servicio a domicilio y entrega en sucursal ya que no todas las sucursales cuentan con estos servicios.');">
+                                        <i class="fa fa-question-circle"></i>
+                                    </button>
+                                </label>
+                                <input class="form-control required" type="number" placeholder="Código postal" id="collect_postal" name="collect_postal" />
+                            </div>
+
+                            <div class="mt-3 mb-3 col-12 no-padding float-left text-center" id="alertacp" style="display:none !important;">
+                                <p class="alert alert-danger">
+                                    <i class="fa fa-warning fa-lg"></i>&nbsp;Sin cobertura para reparto y/o entrega
+                                </p>
+                            </div>
+
+                            <div class="mt-3">
+                                <label class="no-margin">
+                                    Sucursales:
+                                    <button type="button" class="help-button label" onclick="info('Elige la sucursal que deseas reciba tu pédido, en servicio a domicilio algunas sucursales cuentan con cobro.');">
+                                        <i class="fa fa-question-circle"></i>
+                                    </button>
+                                </label>
+                                <select id="sucursales" name="sucursales" onchange="setConfBranch(this.value)" class="form-control required">
+                                    <option value="">Elige sucursal</option>
+                                </select>
+                            </div>
+
+                            <div class="mt-3 col-12 no-padding float-left">
+                                <label class="no-margin col-12 no-padding float-left">Fecha:</label>
+                                <div class="col-4 float-left no-pl">
+                                    <select id="day" name="day" class="form-control">
+                                        <option>Día</option>
+                                    </select>
+                                </div>
+                                <div class="col-4 float-left no-padding">
+                                    <select id="month" name="month" class="form-control">
+                                        <option>Mes</option>
+                                    </select>
+                                </div>
+                                <div class="col-4 float-left no-pr">
+                                    <select id="year" name="year" class="form-control">
+                                        <option>Año</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-3 col-12 no-padding float-left">
+                                <label class="no-margin col-12 no-padding float-left">Horario:</label>
+                                
+                                <div class="col-6 float-left no-pl">
+                                    <select id="hour" name="hour" class="form-control">
+                                        <option>Hora</option>
+                                    </select>
+                                </div>
+                                <div class="col-6 float-left no-pr">
+                                    <select id="minute" name="minute" class="form-control">
+                                        <option>Minuto</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!---------------------- Domicilio ---------------------->
+                        <div id="domicilio" class="hidden">
+                            <h3 class="title-ordena mt-3 col-12 float-left">Completa tu información</h3>
+                            
+                            <div class="mt-3 col-12 no-padding float-left">
+                                <label class="no-margin">Colonia:</label>
+                                <select id="collect_cityarea" name="collect_cityarea" class="form-control">
+                                    <option value="">Selecciona colonia</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mt-3 col-12 no-padding float-left">
+                                <label class="no-margin">Calle:</label>
+                                <input class="form-control" type="text" placeholder="" id="collect_street" name="collect_street" maxlength="60" />
+                            </div>
+                            
+                            <div class="mt-3 col-12 no-padding float-left">
+                                <label class="no-margin">Número exterior:</label>
+                                <input class="form-control" type="text" placeholder="" id="collect_numbext" name="collect_numbext" maxlength="20" />
+                            </div>
+                            
+                            <div class="mt-3 col-12 no-padding float-left">
+                                <label class="no-margin">Número interior:</label>
+                                <input class="form-control" type="text" placeholder="" id="collect_numbint" name="collect_numbint" maxlength="20"/>
+                            </div>
+                            
+                            <div class="mt-3 col-12 no-padding float-left">
+                                <label class="no-margin">Referencias:</label>
+                                <input class="form-control" type="text" placeholder="" id="collect_reference" name="collect_reference" maxlength="100" />
+                            </div>
+                        </div>
+                        
+                        <!---------------------- Button ---------------------->
+                        
+                        <div id="buttonSave" class="hidden">
+                            <!-- Alerta -->
+                            <div class="col-12 float-left no-padding mt-3 text-center">
+                                <p class="alert alert-danger" id="alertaRegistro" style="display:none !important;"></p>
+                            </div>
+
+                            <div class="col-8 offset-2 col-sm-6 offset-sm-3 float-left">
+                                <button type="button" onclick="orderSave()" class="btn btn-block">
+                                    CONTINUAR
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="col-12 no-padding front-footer">
+            <img src="img/footer.png" width="100%">
+        </div>
+        
+        <!-- Menu -->
+        <div class="nav-inf" id="menus">
+            <i class="fa fa-bars"></i>
+        </div>
+ 
+        <!--JS-->
+        <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.js"></script>
+        <script type="text/javascript" src="js/sweetalert2.all.js"></script>
+        <script type="text/javascript" src="js/push.js"></script>
+        <script type="text/javascript" src="js/polyfill.min.js"></script>
+        <script type="text/javascript" src="js/comun.min.js"></script>
+        <script type="text/javascript" src="js/menu.js"></script>
+        <script type="text/javascript" src="js/pedidos.min.js"></script>
+        <script type="text/javascript">
+            
+            getMaxPlateMinutes()
+            
+            $(document).ready(function() {
+                
+                const scriptPromise = new Promise((resolve, reject) => {
+                    
+                    const script = document.createElement('script')
+                    
+                    document.body.appendChild(script)
+                    
+                    script.onload   = resolve
+                    script.onerror  = reject
+                    script.async    = true
+                    script.src      = 'http://maps.googleapis.com/maps/api/js?key=AIzaSyCC_pRbYdSwGQaoe3dBSDtmnNIzlVcfeH0&libraries=places'
+                })
+                
+                scriptPromise.then( () => {
+                    
+                    //Fill information my position, this function is after loading all libreries
+                    myPosition()
+                    .then( () => {
+                        
+                        //validate if information is already inserted before
+                        if (localStorage.getItem("collect_where") !== null) {
+                            const where  = localStorage.getItem('collect_where')
+                            const postal = localStorage.getItem('collect_postal')
+
+                            //trigger to postal code
+                            $( "#collect_postal" ).val(postal).trigger( "change" )
+
+                            //Asign val to select where
+                            $( "#where" ).val(where).trigger( "change" )
+                        }
+
+                        //Scrolldown
+                        $("html, body").animate({ scrollTop: $(document).height() }, 500)
+                    })
+                    .catch( () => {
+                        console.log('error')
+                        
+                        swal({
+                            title: '!Atención¡',
+                            type: 'error',
+                            confirmButtonText: 'Reintentar',
+                            animation: false,
+                            text: 'No cuentas con tu GPS activo, por favor verifica que este activo la conexión GPS',
+                            showLoaderOnConfirm: true,
+                            allowOutsideClick: false,
+                            preConfirm: () => {
+                                window.location.replace("ordenaEntrega.html");
+                            }
+                        })
+                    })
+                })
+                .catch( () => {
+                    swal({
+                        title: '!Atención¡',
+                        type: 'error',
+                        confirmButtonText: 'Reintentar',
+                        animation: false,
+                        text: 'Hubo un error con la librería de GPS, por favor intente de nuevo.',
+                        showLoaderOnConfirm: true,
+                        allowOutsideClick: false,
+                        preConfirm: () => {
+                            window.location.replace("ordenaEntrega.html");
+                        }
+                    })
+                })
+            })
+            
+            $("#where").on('change', function() {
+                
+                //Set value "where"
+                localStorage.setItem('collect_where', this.value);
+                
+                if ( this.value == 1) {
+                    selectHome()
+                }
+                else if ( this.value == 2 ) {
+                    selectCollect()
+                }
+                else {
+                    selectNone()
+                }
+            })
+            
+            //Evento de código postal
+            $("#collect_postal").on('keypress change', function(event) {
+                const countKeys = this.value.length
+                const where     = localStorage.getItem('collect_where')
+                
+                if ( countKeys > 3 ) {
+                    getBranchsByCp(this.value)
+                    
+                    if ( where == 1) {
+                        getCityByCoverage(this.value);
+                    }
+                }
+            })
+            
+            function selectHome() {
+                
+                const postal = localStorage.getItem('collect_postal')
+                        
+                //trigger to postal code
+                $( "#collect_postal" ).val(postal).trigger( "change" )
+                        
+                //Fill in previous information
+                if ( localStorage.getItem("collect_cityarea") !== null ) { 
+                    $( "#collect_cityarea" ).val(JSON.parse(localStorage.getItem("collect_cityarea")).id) 
+                }
+                if ( localStorage.getItem("collect_street") !== null ) { 
+                    $( "#collect_street" ).val(localStorage.getItem("collect_street")) 
+                }
+                if ( localStorage.getItem("collect_numbext") !== null ) { 
+                    $( "#collect_numbext" ).val(localStorage.getItem("collect_numbext")) 
+                }
+                if ( localStorage.getItem("collect_numbint") !== null ) { 
+                    $( "#collect_numbint" ).val(localStorage.getItem("collect_numbint")) 
+                }
+                if ( localStorage.getItem("collect_reference") !== null ) { 
+                    $( "#collect_reference" ).val(localStorage.getItem("collect_reference")) 
+                }
+                
+                $('#how').removeClass('hidden')
+                $('#domicilio').removeClass('hidden')
+                $('#buttonSave').removeClass('hidden')
+                
+                //Message
+                info('Elige la sucursal que deseas reciba tu pédido, en servicio a domicilio algunas sucursales cuentan con cobro.')
+            }
+            
+            function selectCollect() {
+                const postal = localStorage.getItem('collect_postal')
+                        
+                //trigger to postal code
+                $( "#collect_postal" ).val(postal).trigger( "change" )
+                
+                $('#how').removeClass('hidden')
+                $('#domicilio').addClass('hidden')
+                $('#buttonSave').removeClass('hidden')
+            }
+            
+            function selectNone() {
+                $('#how').addClass('hidden')
+                $('#domicilio').addClass('hidden')
+                $('#buttonSave').addClass('hidden')
+            }
+            
+            $("#sucursales").on('change', function() {
+                
+                //Set value "where"
+                const repartoCosto = $(this).find("option:selected").attr('datacost')
+                localStorage.setItem('collect_cost', repartoCosto)
+            })
+            
+        </script>
+    </body>
+</html>

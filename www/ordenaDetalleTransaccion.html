@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            /* following two viewport lines are equivalent to the meta viewport statement above, needed for Windows */
+            /* see http://www.quirksmode.org/blog/archives/2014/05/html5_dev_conf.html and http://dev.w3.org/csswg/css-device-adapt/ */
+            @-ms-viewport { width: 100vw ; zoom: 100% ; }  @viewport { width: 100vw ; zoom: 100% ; }
+            @-ms-viewport { user-zoom: fixed ; }           @viewport { user-zoom: fixed ; }
+        </style>
+        
+        <!--CSS-->
+        <link rel="stylesheet" href="css/bootstrap.css" />
+        <link rel="stylesheet" href="css/main.css" />
+        <link rel="stylesheet" href="css/font-awesome.css" />
+        <link rel="stylesheet" href="css/menu.css" />
+        <link rel="stylesheet" href="css/main-ordena.css" />
+        
+        <!-- JS -->
+        <script type="text/javascript" src="js/app.js"></script>
+        <script type="text/javascript" src="xdk/init-dev.js"></script>        
+        <script type="text/javascript" src="cordova.js"></script>
+    </head>
+    
+    <body onclick="afuera();">
+        <!-- opacity -->
+        <div class="col-12 float-left modal-background hidden"></div>
+        
+        <!-- Menú -->
+        <header id="menu"></header>
+        
+        <!-- Header -->
+        <div id="header">
+            <div class="col-4 logo float-left no-padding">
+                <img src="img/logo.png" onclick="index();"/>
+            </div>
+            <div class="col-8 text-right float-left" id="header-title">
+                <img src="img/splash.png" />
+                <h1>RECIBO</h1>
+            </div>
+        </div>
+        
+        <div class="main-wrapper" style="display: none;">
+            <div class="col-12 col-md-8 offset-md-2 no-padding">
+                
+                <!-- Navegación -->
+                <div id="nav-indicador">
+                    <div class="col-4 float-left no-pr text-left">
+                        <a href="ordenaTransacciones.html"><i class="fa fa-arrow-circle-left"></i></a>
+                        <a href="ordena.html"><i class="fa fa-home"></i></a>
+                    </div>
+                    <div class="col-6 float-left no-pr text-left">
+                        <span></span>
+                    </div>
+                    <div class="col-2 float-left no-pl text-right">
+                        <a href="ordenaConfirma.html" id="shopping-cart" class="text-right mr-2 hide">
+                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                            <span id="number-cart"></span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-12 float-left mt-2">
+                    <!-- Titulo -->
+                    <div class="title-cuenta text-center">Detalle de transacción</div>
+
+                    <p class="text-justify mt-3">Folio: <b id="folio"></b></p>
+                    <p class="text-justify">PayerID: <b id="id"></b></p>
+                    <p class="text-justify">PaymentId: <b id="state"></b></p>
+                    <p class="text-justify">Token: <b id="cart"></b></p>
+                    <p class="text-justify">Fecha: <b id="create_time"></b></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="col-12 no-padding front-footer">
+            <img src="img/footer.png" width="100%">
+        </div>
+        
+        <!-- Menu -->
+        <div class="nav-inf" id="menus">
+            <i class="fa fa-bars"></i>
+        </div>
+        
+        <!--JS-->
+        <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.js"></script>
+        <script type="text/javascript" src="js/sweetalert2.all.js"></script>
+        <script type="text/javascript" src="js/push.js"></script>
+        <script type="text/javascript" src="js/polyfill.min.js"></script>
+        <script type="text/javascript" src="js/comun.min.js"></script>
+        <script type="text/javascript" src="js/menu.js"></script>
+        <script type="text/javascript" src="js/pedidos.min.js"></script>
+        <script type="application/javascript">
+            getPaymentData(localStorage.getItem("historyTransaction"))
+            
+            swal({
+                title: 'Cargando recibo...',
+                timer: 2000,
+                allowOutsideClick: false,
+                onOpen: () => {
+                    swal.showLoading()
+                }
+            }).then(() => {
+                $('.main-wrapper').show()
+            })
+        </script>
+    </body>
+</html>

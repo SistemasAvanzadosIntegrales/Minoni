@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            /* following two viewport lines are equivalent to the meta viewport statement above, needed for Windows */
+            /* see http://www.quirksmode.org/blog/archives/2014/05/html5_dev_conf.html and http://dev.w3.org/csswg/css-device-adapt/ */
+            @-ms-viewport { width: 100vw ; zoom: 100% ; }  @viewport { width: 100vw ; zoom: 100% ; }
+            @-ms-viewport { user-zoom: fixed ; }           @viewport { user-zoom: fixed ; }
+        </style>
+
+        <!--CSS-->
+        <link rel="stylesheet" href="css/bootstrap.css" />
+        <link rel="stylesheet" href="css/main.css" />
+        <link rel="stylesheet" href="css/font-awesome.css" />
+        
+        <!-- JS -->
+        <script type="text/javascript" src="js/app.js"></script>
+        <script type="text/javascript" src="xdk/init-dev.js"></script>        
+        <script type="text/javascript" src="cordova.js"></script>  
+    </head>
+    
+    <body>
+        <!-- Header -->
+        <div id="header">
+            <div class="col-4 logo float-left no-padding">
+                <img src="img/logo.png" onclick="index();"/>
+            </div>
+            <div class="col-8 text-right float-left" id="header-title">
+                <img src="img/splash.png" />
+                <h1>Contraseña</h1>
+            </div>
+        </div>
+        
+        <div class="main-wrapper">
+            <div class="col-12 col-md-8 offset-md-2">
+                <h3>Recuperar Contraseña</h3>
+
+                <form  class="form-group" id="recuperar">
+                    <p>
+                        Escriba los datos solicitados y presione el botón "Enviar"
+                    </p>
+
+                    <input type="email" class="form-control mt-4 text-left" id="email" name="email" placeholder="E-mail">
+
+                    <p class="alert alert-danger mt-4" id="alertaLogin" style="display:none !important;"></p>
+
+                    <div class="col-8 offset-2 col-sm-6 offset-sm-3 mt-4">
+                        <button type="button" onclick="changePassword();" class="btn btn-block">
+                            Envíar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="col-12 no-padding front-footer">
+            <img src="img/footer.png" width="100%">
+        </div>
+        
+        <!--JS-->
+        <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.js"></script>
+        <script type="text/javascript" src="js/sweetalert2.all.js"></script>
+        <script type="text/javascript" src="js/push.js"></script>
+        <script type="text/javascript" src="js/polyfill.min.js"></script>
+        <script type="text/javascript" src="js/comun.min.js"></script>
+        <script language="javascript">
+            
+            $(document).ready(function() {
+                $('form').keypress(function(e) {   
+                    if(e == 13) {
+                        return false
+                    }
+                })
+                
+                $('input').keypress(function(e) {
+                    if(e.which == 13){
+                        return false
+                    }
+                })
+            })
+        </script>
+    </body>
+</html>
